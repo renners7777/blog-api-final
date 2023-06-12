@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog API</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+<h1>My Blog Post</h1>
+<p>Add a title and your blog in the form below and submit enter. This will render your post to the DOM below and to a MongoDB database</p>
+
+<form action="/addPost" method="POST">
+    <input type="text" placeholder="What is your blog title?" name="title">
+        <input type="text" placeholder="Write your blog here..." name="post">
+            <input type="submit"></form>
+
+    <h2>Blog Post: </h2>
+    <p class="blogPost"></p>
+    <input class="updateBtn" type="button" value="Update Post">
+       <span class='fa fa-trash'></span>
+        
+
+    
+
+    
+    
+
+    <script src='js/main.js'></script>
+</body>
+</html>

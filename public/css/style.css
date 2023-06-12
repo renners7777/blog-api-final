@@ -1,0 +1,19 @@
+body{
+    display: flex;
+    height: 100vh;
+   justify-content: center;
+   align-items: center;
+}
+
+h1{
+    color:aqua;
+}
+
+.blogPost{
+    font-weight: bold;
+    color: rgb(61, 19, 19);
+}
+
+.updateBtn{
+    border-radius: 5px;
+}
