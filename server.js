@@ -23,7 +23,7 @@ app.use(express.json())
 
 app.get('/',async (request, response)=>{
     const getPosts = await db.collection('posts').find().toArray()
-    response.render('index.ejs', { title: 'title', posts: posts })
+    response.render('index.ejs', { items: getPosts })
     // db.collection('todos').find().toArray()
     // .then(data => {
     //     db.collection('todos').countDocuments({completed: false})

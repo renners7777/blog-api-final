@@ -1,6 +1,8 @@
+const deleteBtn = document.querySelectorAll(".fa-trash");
+const item = document.querySelectorAll(".item span");
 const createPost = document.querySelector("#createPost");
 const updatePost = document.querySelectorAll(".updateBtn");
-const deletePost = document.querySelectorAll(".fa-trash");
+
 
 Array.from(post).forEach((element) => {
   element.addEventListener("click", createPost);
@@ -13,7 +15,7 @@ async function createPost() {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        itemFromJS: itemText,
+        'itemFromJS': itemText,
       }),
     });
     const data = await response.json();
@@ -35,7 +37,7 @@ async function updatePost() {
       method: "put",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        itemFromJS: itemText,
+        'itemFromJS': itemText,
       }),
     });
     const data = await response.json();
@@ -57,7 +59,7 @@ async function deletePost() {
       method: "delete",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        itemFromJS: itemText,
+        'itemFromJS': itemText,
       }),
     });
     const data = await response.json();
@@ -67,5 +69,3 @@ async function deletePost() {
     console.log(err);
   }
 }
-
-

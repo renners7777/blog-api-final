@@ -17,11 +17,22 @@
     <input type="text" placeholder="What is your blog title?" name="title">
         <input type="text" placeholder="Write your blog here..." name="post">
             <input type="submit"></form>
+<input class="updateBtn" type="button" value="Update Post">
+
 
     <h2>Blog Post: </h2>
-    <p class="blogPost"></p>
-    <input class="updateBtn" type="button" value="Update Post">
-       <span class='fa fa-trash'></span>
+        <ul class="blogPosts">
+            <% for(let i=0; i < items.length; i++) {%>
+                <li class="item">
+                    <% if(items[i].completed === true) {%>
+                        <span><%= items[i].thing %></span>
+                    <% } %>
+                    <span class='fa fa-trash'></span>
+                </li>
+            <% } %>
+        </ul>
+
+       
         
 
     
