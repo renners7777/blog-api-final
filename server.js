@@ -35,7 +35,7 @@ app.get('/',async (request, response)=>{
 })
 
 app.post('/addPost', (request, response) => {
-    db.collection('posts').insertOne({thing: request.body.postItem, completed: false})
+    db.collection('posts').insertOne({title: request.body.title, completed: true}, {content: request.body.content, completed: true})
     .then(result => {
         console.log('Post Added')
         response.redirect('/')
