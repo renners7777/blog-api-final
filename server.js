@@ -22,23 +22,19 @@ app.use(express.urlencoded({ extended: true })); // This line tells our app to u
 app.use(express.json()); //This line tells our app to use the body-parser middleware.
 
 app.get("/", async (request, response) => {
-  // const todoItems = await db.collection('todos').find().toArray()
-  // const itemsLeft = await db.collection('todos').countDocuments({completed: false})
-  // response.render('index.ejs', { items: todoItems, left: itemsLeft })
-  db.collection("posts")
-    .find()
-    .toArray()
-    .then((data) => {
-      db.collection("posts")
-          response.render("index.ejs", { items: data });
-          response.redirect("/");
-        })
-    .catch((error) => console.error(error));
-    })
+  try {
+    const items = await db.collection("posts").find().toArray();
+    response.render("index.ejs", { items: items });
+  } catch (error) {
+    console.error(error);
+    response.status(500).send("Internal Server Error");
+  }
+});
+
 
 app.post("/addPost", (request, response) => {
   db.collection("posts")
-    .insertOne({ thing: request.body.todoItem, completed: false })
+    .insertOne({thing: request.body.content, completed: false })
     .then((result) => {
       console.log("Post Added");
       response.redirect("/");
@@ -47,27 +43,22 @@ app.post("/addPost", (request, response) => {
 });
 
 app.put("/updatePost", (request, response) => {
+  const itemToUpdate = request.body.itemFromJS;
   db.collection("posts")
-    .updateOne(
-      { thing: request.body.itemFromJS },
-      {
-        $set: {
-          completed: true,
-        },
-      },
-      {
-        sort: { _id: -1 },
-        upsert: false,
-      }
+    .findOneAndUpdate(
+      { thing: itemToUpdate },
+      { $set: { completed: true } },
+      { returnOriginal: false }
     )
     .then((result) => {
-      console.log("Post updated");
+      console.log("Post updated:", result.value);
       response.json("Post updated");
     })
-    .catch((error) => console.error(error));
+    .catch((error) => {
+      console.error(error);
+      response.status(500).send("Internal Server Error");
+    });
 });
-
-
 
 app.delete("/deletePost", (request, response) => {
   db.collection("posts")

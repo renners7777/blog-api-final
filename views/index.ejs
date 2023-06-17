@@ -11,37 +11,25 @@
 
 <body>
 <h1>My Blog Post</h1>
-<p>Add a title and your blog in the form below and submit enter. This will render your post to the DOM below and to a MongoDB database</p>
+<p>Add your post in the form below and "submit". This will render your post to the DOM below</p>
 
-<h1>Posts:
-</h1>
+<form action="/addPost" method="post">
+    <input type="text" placeholder="Thing which I am posting" name="content">
+    <input type="submit">
+</form>
+
+
+<h1>Posts:</h1>
 <ul class="postItems">
-    <% for(let i=0; i < items.length; i++) {%>
+    <% for(let i=0; i < items.length; i++) { %>
         <li class="item">
-                <span><%= items[i].thing %></span>
-            <% } %>
-            <span class='fa fa-trash'></span>
+            <span><%= items[i].thing %></span>
+            <span class="fa fa-edit updateBtn"></span>
+            <span class="fa fa-trash deleteBtn"></span>
         </li>
     <% } %>
 </ul>
 
-<h2>Add A Post:</h2>
-
-<form action="/addPost" method="post">
-    <input type="text" placeholder="Thing which I am posting" name="postItem">
-    <input type="submit">
-</form>
-
-<h2>Update Post:</h2>
-
-<form action="/updatePost" method="post">
-    <input type="text" placeholder="update post here" name="updateItem">
-    <input type="submit">
-</form>
-
-
-
-
-    <script src='./js/main.js'></script>
+   <script src='./js/main.js'></script>
 </body>
 </html>
