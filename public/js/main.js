@@ -1,49 +1,58 @@
-const deleteBtn = document.querySelectorAll(".fa-trash");
+const deleteBtns = document.querySelectorAll(".deleteBtn");
 const updateBtns = document.querySelectorAll(".updateBtn");
-const item = document.querySelectorAll(".item span");
 
-Array.from(deleteBtn).forEach((element) => {
-  element.addEventListener("click", deleteItem);
+Array.from(deleteBtns).forEach((deleteBtn) => {
+  deleteBtn.addEventListener("click", deleteItem);
 });
 
-Array.from(updateBtns).forEach((element) => {
-  element.addEventListener("click", updateItem);
+Array.from(updateBtns).forEach((updateBtn) => {
+  updateBtn.addEventListener("click", updateItem);
 });
 
 async function deleteItem() {
-  const itemText = this.parentNode.childNodes[1].innerText;
+  const listItem = this.parentNode;
+  const itemText = listItem.querySelector("span").innerText;
+
   try {
     const response = await fetch("/deletePost", {
-      method: "delete",
+      method: "DELETE",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        itemFromJS: itemText,
-      }),
-    });
-    const data = await response.json();
-    console.log(data);
-    location.reload();
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-async function updateItem(event) {
-  const postId = event.target.dataset.id;
-
-  try {
-    const response = await fetch(`/updatePost/${postId}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ itemFromJS: itemText }),
     });
 
     if (response.ok) {
-      console.log("Post updated successfully");
-      location.reload();
+      console.log("Post deleted");
+      listItem.remove();
     } else {
-      console.error("Failed to update post");
+      console.error("Failed to delete post");
     }
   } catch (error) {
     console.error(error);
+  }
+}
+
+async function updateItem() {
+  const listItem = this.parentNode;
+  const postId = this.dataset.id;
+  const updateItem = prompt("Enter updated post:");
+
+  if (updateItem) {
+    try {
+      const response = await fetch(`/updatePost/${postId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ updatedContent: updateItem }),
+      });
+
+      if (response.ok) {
+        console.log("Post updated successfully");
+        const postContent = listItem.querySelector("span");
+        postContent.innerText = updateItem;
+      } else {
+        console.error("Failed to update post");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

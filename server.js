@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const MongoClient = require("mongodb").MongoClient;
+const { ObjectId } = require("mongodb");
 const PORT = 8080;
 require("dotenv").config();
 
@@ -44,18 +45,32 @@ app.post("/addPost", (request, response) => {
 
 app.put("/updatePost/:id", (request, response) => {
   const postId = request.params.id;
+  const updatedContent = request.body.updatedContent;
 
   db.collection("posts")
-    .updateOne({ _id: ObjectId(postId) }, { $set: { completed: true } })
+    .updateOne({ _id: ObjectId(postId) }, { $set: { thing: updatedContent } })
     .then(() => {
       console.log("Post updated");
-      response.sendStatus(200);
+
+      // Fetch the updated post data from the database
+      db.collection("posts")
+        .findOne({ _id: ObjectId(postId) })
+        .then((updatedPost) => {
+          // Send the updated post data back to the client
+          response.json(updatedPost);
+        })
+        .catch((error) => {
+          console.error(error);
+          response.sendStatus(500);
+        });
     })
     .catch((error) => {
       console.error(error);
       response.sendStatus(500);
     });
 });
+
+
 
 
 app.delete("/deletePost", (request, response) => {

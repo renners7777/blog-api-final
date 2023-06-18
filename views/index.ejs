@@ -21,14 +21,16 @@
 
 <h1>Posts:</h1>
 <ul class="postItems">
-    <% for(let i=0; i < items.length; i++) { %>
+    <% for(let i = 0; i < items.length; i++) { %>
         <li class="item">
-            <span><%= items[i].thing %></span>
+            <span id="postContent<%= i %>"><%= items[i].thing %></span>
             <button class="fa fa-edit updateBtn" data-id="<%= items[i]._id %>" title="Update"></button>
-            <span class="fa fa-trash deleteBtn" title="delete"></span>
+            <span class="fa fa-trash deleteBtn" title="Delete"></span>
         </li>
     <% } %>
 </ul>
+
+
 
    <script src='./js/main.js'></script>
 </body>
