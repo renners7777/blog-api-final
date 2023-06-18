@@ -25,7 +25,7 @@ app.use(express.json()); //This line tells our app to use the body-parser middle
 app.get("/", async (request, response) => {
   try {
     const items = await db.collection("posts").find().toArray();
-    response.render("index.ejs", { items: items });
+    response.render("./views/index.ejs", { items: items });
   } catch (error) {
     console.error(error);
     response.status(500).send("Internal Server Error");
