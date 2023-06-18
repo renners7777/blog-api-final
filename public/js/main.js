@@ -1,13 +1,13 @@
 const deleteBtn = document.querySelectorAll(".fa-trash");
-const updateBtn = document.querySelectorAll(".fa-edit");
+const updateBtns = document.querySelectorAll(".updateBtn");
 const item = document.querySelectorAll(".item span");
 
 Array.from(deleteBtn).forEach((element) => {
   element.addEventListener("click", deleteItem);
 });
 
-Array.from(updateBtn).forEach((element) => {
-  element.addEventListener("click", editItem);
+Array.from(updateBtns).forEach((element) => {
+  element.addEventListener("click", updateItem);
 });
 
 async function deleteItem() {
@@ -28,28 +28,22 @@ async function deleteItem() {
   }
 }
 
-async function editItem() {
-  const itemText = this.parentNode.childNodes[1].innerText;
-  const newItemText = prompt("Enter the updated text:", itemText);
+async function updateItem(event) {
+  const postId = event.target.dataset.id;
 
-  if (newItemText) {
-    try {
-      const updatedItem = {
-        itemFromJS: itemText,
-        newItemText: newItemText,
-      };
+  try {
+    const response = await fetch(`/updatePost/${postId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+    });
 
-      const response = await fetch("/updatePost", {
-        method: "put",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedItem),
-      });
-
-      const data = await response.json();
-      console.log(data);
+    if (response.ok) {
+      console.log("Post updated successfully");
       location.reload();
-    } catch (err) {
-      console.log(err);
+    } else {
+      console.error("Failed to update post");
     }
+  } catch (error) {
+    console.error(error);
   }
 }

@@ -42,23 +42,21 @@ app.post("/addPost", (request, response) => {
     .catch((error) => console.error(error));
 });
 
-app.put("/updatePost", (request, response) => {
-  const itemToUpdate = request.body.itemFromJS;
+app.put("/updatePost/:id", (request, response) => {
+  const postId = request.params.id;
+
   db.collection("posts")
-    .findOneAndUpdate(
-      { thing: itemToUpdate },
-      { $set: { completed: true } },
-      { returnOriginal: false }
-    )
-    .then((result) => {
-      console.log("Post updated:", result.value);
-      response.json("Post updated");
+    .updateOne({ _id: ObjectId(postId) }, { $set: { completed: true } })
+    .then(() => {
+      console.log("Post updated");
+      response.sendStatus(200);
     })
     .catch((error) => {
       console.error(error);
-      response.status(500).send("Internal Server Error");
+      response.sendStatus(500);
     });
 });
+
 
 app.delete("/deletePost", (request, response) => {
   db.collection("posts")

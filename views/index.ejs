@@ -15,7 +15,7 @@
 
 <form action="/addPost" method="post">
     <input type="text" placeholder="Thing which I am posting" name="content">
-    <input type="submit">
+    <input type="submit" title="Submit your post">
 </form>
 
 
@@ -24,8 +24,8 @@
     <% for(let i=0; i < items.length; i++) { %>
         <li class="item">
             <span><%= items[i].thing %></span>
-            <span class="fa fa-edit updateBtn"></span>
-            <span class="fa fa-trash deleteBtn"></span>
+            <button class="fa fa-edit updateBtn" data-id="<%= items[i]._id %>" title="Update"></button>
+            <span class="fa fa-trash deleteBtn" title="delete"></span>
         </li>
     <% } %>
 </ul>
