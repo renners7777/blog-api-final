@@ -70,9 +70,6 @@ app.put("/updatePost/:id", (request, response) => {
     });
 });
 
-
-
-
 app.delete("/deletePost", (request, response) => {
   db.collection("posts")
     .deleteOne({ thing: request.body.itemFromJS })
