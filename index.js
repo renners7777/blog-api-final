@@ -3,6 +3,7 @@ const app = express();
 const MongoClient = require("mongodb").MongoClient;
 const { ObjectId } = require("mongodb");
 const PORT = 8080;
+const cors = require("cors");
 require("dotenv").config();
 
 let db,
@@ -23,6 +24,7 @@ app.set("view engine", "ejs"); // This line tells our app to use EJS as its view
 app.use(express.static("public")); //This line tells our app to use the public folder for static files.
 app.use(express.urlencoded({ extended: true })); // This line tells our app to use the body-parser middleware. This is how we can get the data from the text.
 app.use(express.json()); //This line tells our app to use the body-parser middleware.
+app.use(cors()); // This line tells our app to use the cors middleware.
 
 app.get("/", async (request, response) => {
   try {
