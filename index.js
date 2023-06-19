@@ -13,9 +13,11 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true }).then(
   (client) => {
     console.log(`Connected to ${dbName} Database`);
     db = client.db(dbName);
-  }
-);
-//The code above connects our server to the MongoDB database.
+  })
+  app.listen(process.env.PORT || PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
 
 app.set("view engine", "ejs"); // This line tells our app to use EJS as its view engine.
 app.use(express.static("public")); //This line tells our app to use the public folder for static files.
@@ -80,6 +82,3 @@ app.delete("/deletePost", (request, response) => {
     .catch((error) => console.error(error));
 });
 
-app.listen(process.env.PORT || PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
