@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const MongoClient = require("mongodb").MongoClient;
 const { ObjectId } = require("mongodb");
-const PORT = 3000;
+const PORT = 8080;
 const cors = require("cors");
 require("dotenv").config();
 
@@ -15,7 +15,7 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true }).then(
     console.log(`Connected to ${dbName} Database`);
     db = client.db(dbName);
   })
-  app.listen(process.env.PORT || 5000, () => {
+  app.listen(process.env.PORT || 3000, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
