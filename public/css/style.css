@@ -9,17 +9,21 @@ body{
 
 h1{
     color:aqua;
-    font-size: 1.5rem;
+    font-size: 30px;
 }
 
 .blogPost{
     font-weight: bold;
-    color: rgb(61, 19, 19);
-    font-size: 1.5rem;
+    background-color: rgb(61, 19, 19);
+    font-size: 30px;
+}
+
+.submitBtn{
+    font-weight:900;
+    color: burlywood;
+    padding: 10px 20px;
 }
 
 .updateBtn{
     border-radius: 5px;
-    background-color: rgb(75, 75, 75);
-    padding: 5px 10px;
 }
