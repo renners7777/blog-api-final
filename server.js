@@ -9,6 +9,7 @@ require("dotenv").config();
 let db,
   dbConnectionStr = process.env.DB_STRING, // The dbConnectionStr is saved to the .env file. If you have a .env file, you need to npm install dotenv and require dotenv.
   dbName = "blog-api-db"; // this is the name of the database that we will be using.
+  dbCollection = "posts"; // this is the name of the collection that we will be using.
 
 MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true }).then(
   (client) => {
@@ -28,7 +29,7 @@ app.use(cors()); // This line tells our app to use the cors middleware.
 
 app.get("/", async (request, response) => {
   try {
-    const items = await db.collection("posts").find().toArray();
+    const items = await dbCollection.find().toArray();
     response.render("index.ejs", { items: items });
   } catch (error) {
     console.error(error);
@@ -38,7 +39,7 @@ app.get("/", async (request, response) => {
 
 
 app.post("/addPost", (request, response) => {
-  db.collection("posts")
+  dbCollection
     .insertOne({thing: request.body.content, completed: false })
     .then((result) => {
       console.log("Post Added");
@@ -51,13 +52,13 @@ app.put("/updatePost/:id", (request, response) => {
   const postId = request.params.id;
   const updatedContent = request.body.updatedContent;
 
-  db.collection("posts")
+  dbCollection
     .updateOne({ _id: ObjectId(postId) }, { $set: { thing: updatedContent } })
     .then(() => {
       console.log("Post updated");
 
       // Fetch the updated post data from the database
-      db.collection("posts")
+      dbCollection
         .findOne({ _id: ObjectId(postId) })
         .then((updatedPost) => {
           // Send the updated post data back to the client
@@ -75,7 +76,7 @@ app.put("/updatePost/:id", (request, response) => {
 });
 
 app.delete("/deletePost", (request, response) => {
-  db.collection("posts")
+  dbCollection
     .deleteOne({ thing: request.body.itemFromJS })
     .then((result) => {
       console.log("Post Deleted");
