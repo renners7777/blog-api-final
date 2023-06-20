@@ -21,6 +21,7 @@ p{
     font-size: 25px;
     color:azure;
     background-color: lightsalmon;
+    max-width: 400px;
 }
 
 .submitBtn{
