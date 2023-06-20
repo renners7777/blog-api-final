@@ -2,17 +2,20 @@ body{
     display: flex;
     flex-direction: column;
     height: 100vh;
-   justify-content: center;
-   align-items: center;
+    justify-content: center;
+    align-items: center;
+    background-color: whitesmoke;
 }
 
 h1{
     color:aqua;
+    font-size: 20px;
 }
 
 .blogPost{
     font-weight: bold;
     color: rgb(61, 19, 19);
+    font-size: 20px;
 }
 
 .updateBtn{
