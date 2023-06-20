@@ -6,23 +6,25 @@ const PORT = 8080;
 require("dotenv").config();
 
 let db,
-  dbConnectionStr = process.env.DB_STRING, // The dbConnectionStr is saved to the .env file. If you have a .env file, you need to npm install dotenv and require dotenv.
-  dbName = "blog-api-db"; // this is the name of the database that we will be using.
+  dbConnectionStr = process.env.DB_STRING,
+  dbName = "blog-api-db";
 
-MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true }).then(
-  (client) => {
+MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
+  .then((client) => {
     console.log(`Connected to ${dbName} Database`);
     db = client.db(dbName);
+    app.listen(process.env.PORT || PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
   })
-  app.listen(process.env.PORT || 3000, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+  .catch((error) => {
+    console.error("Failed to connect to the database:", error);
+  });
 
-
-app.set("view engine", "ejs"); // This line tells our app to use EJS as its view engine.
-app.use(express.static("public")); //This line tells our app to use the public folder for static files.
-app.use(express.urlencoded({ extended: true })); // This line tells our app to use the body-parser middleware. This is how we can get the data from the text.
-app.use(express.json()); //This line tells our app to use the body-parser middleware.
+app.set("view engine", "ejs");
+app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.get("/", async (request, response) => {
   try {
