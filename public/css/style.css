@@ -9,13 +9,18 @@ body{
 
 h1{
     color:aqua;
-    font-size: 30px;
+    font-size: 25px;
+}
+
+p{
+    font-size: 20px;
 }
 
 .postItems{
     font-weight: bold;
-    background-color: rgb(61, 19, 19);
-    font-size: 30px;
+    font-size: 25px;
+    color:azure;
+    background-color: lightsalmon;
 }
 
 .submitBtn{
